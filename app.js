@@ -84,7 +84,6 @@ const opts = {
   
       app.listen(PORT, () => {
 
-          //  console.log(`${"https://pleasant-hosiery-pike.cyclic.app"}/graphql`)
            console.log(`http://localhost:${PORT}/graphql`)
       });
     } catch (error) {
