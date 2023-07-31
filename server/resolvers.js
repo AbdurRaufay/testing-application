@@ -72,54 +72,54 @@ const resolvers = {
   },
   },
   Mutation: {
-    // signUpUser: async (_, { firstName,lastName,email,password ,role}) => {
-    //   try {
-    //     const existingUser = await User.findOne({ email: email });
-    //     if (existingUser) {
-    //     return {
-    //       message:"User already exists with that email"
-    //     }
-    //     }
-
-    //     const hashPassword = await bcrypt.hash(password, 10);
-    //     const userNew = await User.create({
-    //       firstName,
-    //       lastName,
-    //       email,
-    //       password: hashPassword,
-    //       role:role
-    //     });
-
-    //     return {
-    //       userNew,
-    //       message:"Register Successfully"
-    //     };
-    //   } catch (err) {
-    //    return {
-    //     message:err.message
-    //    }
-    //   }
-    // },
-    signUpUser: async ({ firstName, lastName, email, password, role }) => {
+    signUpUser: async (_, {email,password}) => {
       try {
         const existingUser = await User.findOne({ email: email });
         if (existingUser) {
-          throw new Error('User already exists with that email');
+        return {
+          message:"User already exists with that email"
         }
+        }
+
         const hashPassword = await bcrypt.hash(password, 10);
         const userNew = await User.create({
           firstName,
           lastName,
           email,
           password: hashPassword,
-          role: role || 'user',
+          role:role
         });
-        return userNew;
+
+        return {
+          userNew,
+          message:"Register Successfully"
+        };
       } catch (err) {
-        console.log(err);
-        throw err;
+       return {
+        message:err.message
+       }
       }
     },
+    // signUpUser: async ({ firstName, lastName, email, password, role }) => {
+    //   try {
+    //     const existingUser = await User.findOne({ email: email });
+    //     if (existingUser) {
+    //       throw new Error('User already exists with that email');
+    //     }
+    //     const hashPassword = await bcrypt.hash(password, 10);
+    //     const userNew = await User.create({
+    //       firstName,
+    //       lastName,
+    //       email,
+    //       password: hashPassword,
+    //       role: role || 'user',
+    //     });
+    //     return userNew;
+    //   } catch (err) {
+    //     console.log(err);
+    //     throw err;
+    //   }
+    // },
    
     loginUser: async (_, { email, password, googleAuthCode }) => {
       try {
