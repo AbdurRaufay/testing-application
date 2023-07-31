@@ -72,34 +72,35 @@ const resolvers = {
   },
   },
   Mutation: {
-    signUpUser: async (_, {email,password}) => {
+    signUpUser: async (_, { firstName, lastName, email, password, role }) => {
       try {
         const existingUser = await User.findOne({ email: email });
         if (existingUser) {
-        return {
-          message:"User already exists with that email"
+          return {
+            message: "User already exists with that email"
+          };
         }
-        }
-
+    
         const hashPassword = await bcrypt.hash(password, 10);
         const userNew = await User.create({
           firstName,
           lastName,
           email,
           password: hashPassword,
-          role:role
+          role: role
         });
-
+    
         return {
           userNew,
-          message:"Register Successfully"
+          message: "Register Successfully"
         };
       } catch (err) {
-       return {
-        message:err.message
-       }
+        return {
+          message: err.message
+        };
       }
     },
+    
     // signUpUser: async ({ firstName, lastName, email, password, role }) => {
     //   try {
     //     const existingUser = await User.findOne({ email: email });
