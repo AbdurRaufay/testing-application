@@ -91,7 +91,7 @@ const resolvers = {
         });
     
         return {
-          userNew,
+          userNew:userNew,
           message: "Register Successfully"
         };
       } catch (err) {
