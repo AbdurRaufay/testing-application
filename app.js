@@ -83,6 +83,8 @@ const opts = {
       server.applyMiddleware({ app, path: "/graphql" });
   
       app.listen(PORT, () => {
+
+          //  console.log(`${"https://pleasant-hosiery-pike.cyclic.app"}/graphql`)
            console.log(`http://localhost:${PORT}/graphql`)
       });
     } catch (error) {
