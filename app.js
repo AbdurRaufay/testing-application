@@ -21,7 +21,7 @@ require('./server/passport');
 
 
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-app.get('https://prismatic-sunshine-ec4f13.netlify.app/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
+app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
   res.redirect('/profile');
 });
 const opts = {
