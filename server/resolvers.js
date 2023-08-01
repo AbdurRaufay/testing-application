@@ -224,7 +224,7 @@ const resolvers = {
           const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, {
             expiresIn: '1d',
           });
-
+     console.log(user,"userloginwith google")
           return {
             userId: newUser._id,
             token,
