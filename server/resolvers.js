@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Todos = require("./todoModel.js");
+const passport = require('passport');
 const User = require("./userModel.js");
 const CartItem = require("./cartItemModel.js")
 const resolvers = {
