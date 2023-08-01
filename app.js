@@ -27,7 +27,7 @@ app.use(session({
 
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
-  res.redirect('/');
+  res.redirect('https://dreamy-madeleine-9acb7f.netlify.app');
 });
 
 const opts = {
