@@ -123,75 +123,29 @@ const resolvers = {
     //   }
     // },
 
-    loginUser: async (_, { email, password, googleAuthCode }) => {
+    loginUser: async (_, { email, password }) => {
       try {
-        if (!email || !password) {
-          // Regular email/password login
-          const user = await User.findOne({ email });
-          if (!user) {
-            throw new Error('User does not exist with that email');
-          }
-
-          const doMatch = await bcrypt.compare(password, user.password);
-          if (!doMatch) {
-            throw new Error('Email or password do not match');
-          }
-
-          // Email/password login successful, generate token
-          const token = jwt.sign({ userId: user._id }, 'your_secret_key_here', {
-            expiresIn: '1d',
-          });
-
-          return {
-            userId: user._id,
-            token,
-            message: 'Login successful',
-          };
-        } else if (googleAuthCode) {
-          // Google OAuth login
-          const profile = await new Promise((resolve, reject) => {
-            passport.authenticate('google', { session: false }, (err, user) => {
-              if (err || !user) {
-                reject(err);
-              }
-              resolve(user);
-            })({ query: { code: googleAuthCode } });
-          });
-
-          const user = await User.findOne({ email: profile.emails[0].value });
-          if (!user) {
-            // Create a new user if not found
-            const newUser = await User.create({
-              firstName: profile.name.givenName,
-              lastName: profile.name.familyName,
-              email: profile.emails[0].value,
-              role: 'user', // Set the user role as per your requirements
-            });
-            // Google OAuth login successful, generate token for the new user
-            const token = jwt.sign({ userId: newUser._id }, 'your_secret_key_here', {
-              expiresIn: '1d',
-            });
-
-            return {
-              userId: newUser._id,
-              token,
-              message: 'Login successful',
-            };
-          } else {
-            // Google OAuth login successful, generate token for the existing user
-            const token = jwt.sign({ userId: user._id }, 'your_secret_key_here', {
-              expiresIn: '1d',
-            });
-
-            return {
-              userId: user._id,
-              token,
-              message: 'Login successful',
-            };
-          }
-        } else {
-          throw new Error('Invalid login credentials');
+        // Regular email/password login
+        const user = await User.findOne({ email });
+        if (!user) {
+          throw new Error('User does not exist with that email');
         }
+
+        const doMatch = await bcrypt.compare(password, user.password);
+        if (!doMatch) {
+          throw new Error('Email or password do not match');
+        }
+
+        // Email/password login successful, generate token
+        const token = jwt.sign({ userId: user._id }, 'your_secret_key_here', {
+          expiresIn: '1d',
+        });
+
+        return {
+          userId: user._id,
+          token,
+          message: 'Login successful',
+        };
       } catch (err) {
         return {
           message: err.message,
@@ -221,10 +175,10 @@ const resolvers = {
           });
 
           // Google OAuth login successful, generate token for the new user
-          const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, {
+          const token = jwt.sign({ userId: newUser._id }, 'your_secret_key_here', {
             expiresIn: '1d',
           });
-     console.log(user,"userloginwith google")
+
           return {
             userId: newUser._id,
             token,
@@ -232,7 +186,7 @@ const resolvers = {
           };
         } else {
           // Google OAuth login successful, generate token for the existing user
-          const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+          const token = jwt.sign({ userId: user._id }, 'your_secret_key_here', {
             expiresIn: '1d',
           });
 
