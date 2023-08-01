@@ -55,11 +55,11 @@ const opts = {
       const server = new ApolloServer({
         typeDefs,
         resolvers,     
-        cors: {
-            origin: 'https://prismatic-sunshine-ec4f13.netlify.app',
-            credentials: true,
-            methods: ['GET', 'POST'],
-          },
+        // cors: {
+        //     origin: 'https://prismatic-sunshine-ec4f13.netlify.app',
+        //     credentials: true,
+        //     methods: ['GET', 'POST'],
+        //   },
         context: ({ req }) => {
           const token = req.headers.authorization || "";
           try {
