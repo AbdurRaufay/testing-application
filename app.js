@@ -35,7 +35,7 @@ app.get('/auth/google/callback', (req, res, next) => {
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Methods', 'GET, POST');
   // Continue with the rest of the code
-  passport.authenticate('google', { failureRedirect: '/' })(req, res, next);
+  passport.authenticate('google', { failureRedirect: 'https://dreamy-madeleine-9acb7f.netlify.app/login/$[id]' })(req, res, next);
 });
 const opts = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
