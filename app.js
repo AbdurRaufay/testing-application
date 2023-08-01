@@ -7,7 +7,7 @@ const User=require("./server/userModel")
 // const verifyToken = require("./server/VerifyToken");
 const jwt = require("jsonwebtoken");
 const cors=require("cors")
-// const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8080;
 const passport = require('passport');
 const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
 require("dotenv/config");
@@ -15,7 +15,7 @@ const app=express()
 app.use(express.json());
 
 app.use(express.json());
-
+app.use(cors())
 // Initialize Passport
 require('./server/passport');
 
@@ -56,8 +56,8 @@ const opts = {
         typeDefs,
         resolvers,     
         cors: {
-          origin :"http://localhost:3000",
-            // origin: 'https://prismatic-sunshine-ec4f13.netlify.app',
+          // origin :"http://localhost:3000",
+            origin: 'https://prismatic-sunshine-ec4f13.netlify.app',
             credentials: true,
             methods: ['GET', 'POST'],
           },
@@ -84,6 +84,7 @@ const opts = {
       server.applyMiddleware({ app, path: "/graphql" });
   
       app.listen(PORT, () => {
+        
       console.log(`${"https://dark-zipper-deer.cyclic.cloud/graphql"}`)
           //  console.log(`http://localhost:${PORT}/graphql`)
       });
