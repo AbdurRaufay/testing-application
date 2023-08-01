@@ -26,7 +26,7 @@ app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'em
 // });
 app.get('/auth/google/callback', (req, res, next) => {
   // Handle CORS headers here before redirecting
-  res.header('Access-Control-Allow-Origin', 'https://prismatic-sunshine-ec4f13.netlify.app');
+  res.header('Access-Control-Allow-Origin', 'https://dreamy-madeleine-9acb7f.netlify.app');
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Methods', 'GET, POST');
   // Continue with the rest of the code
@@ -65,7 +65,7 @@ const opts = {
         resolvers,     
         cors: {
           // origin :"http://localhost:3000",
-            origin: 'https://prismatic-sunshine-ec4f13.netlify.app',
+            origin: 'https://dreamy-madeleine-9acb7f.netlify.app',
             credentials: true,
             methods: ['GET', 'POST'],
           },
