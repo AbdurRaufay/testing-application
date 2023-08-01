@@ -56,7 +56,7 @@ const opts = {
         typeDefs,
         resolvers,     
         cors: {
-            origin: 'https://scintillating-cucurucho-8944ab.netlify.app', // Replace with your frontend origin
+            origin: 'https://prismatic-sunshine-ec4f13.netlify.app', // Replace with your frontend origin
             credentials: true,
             methods: ['GET', 'POST'],
           },
