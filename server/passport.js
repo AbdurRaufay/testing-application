@@ -23,7 +23,7 @@ passport.use(
       {
         clientID: process.env.clientID,
         clientSecret: process.env.clientSecret,
-        callbackURL: 'http://localhost:8080/auth/google/callback', 
+        callbackURL: 'https://stalwart-dodol-0bbf22.netlify.app/auth/google/callback', 
       },
       async (accessToken, refreshToken, profile, done) => {
         try {

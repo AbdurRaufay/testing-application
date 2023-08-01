@@ -56,7 +56,7 @@ const opts = {
         typeDefs,
         resolvers,     
         cors: {
-            origin: 'http://localhost:3000', // Replace with your frontend origin
+            origin: 'https://stalwart-dodol-0bbf22.netlify.app', // Replace with your frontend origin
             credentials: true,
             methods: ['GET', 'POST'],
           },
