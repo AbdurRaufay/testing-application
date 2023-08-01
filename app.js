@@ -7,7 +7,7 @@ const User=require("./server/userModel")
 // const verifyToken = require("./server/VerifyToken");
 const jwt = require("jsonwebtoken");
 const cors=require("cors")
-const PORT = process.env.PORT || 8080;
+// const PORT = process.env.PORT || 8080;
 const passport = require('passport');
 const { Strategy: JwtStrategy, ExtractJwt } = require('passport-jwt');
 require("dotenv/config");
