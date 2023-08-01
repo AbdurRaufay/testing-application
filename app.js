@@ -21,8 +21,16 @@ require('./server/passport');
 
 
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
-  res.redirect('/profile');
+// app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
+//   res.redirect('/profile');
+// });
+app.get('/auth/google/callback', (req, res, next) => {
+  // Handle CORS headers here before redirecting
+  res.header('Access-Control-Allow-Origin', 'https://prismatic-sunshine-ec4f13.netlify.app');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Allow-Methods', 'GET, POST');
+  // Continue with the rest of the code
+  passport.authenticate('google', { failureRedirect: '/' })(req, res, next);
 });
 const opts = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
