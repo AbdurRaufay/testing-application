@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const { ApolloServer } = require("apollo-server-express");
 const { typeDefs } = require("./server/gqlSchema");
 const { resolvers } = require("./server/resolvers");
+const session = require("express-session");
 const User=require("./server/userModel")
 // const verifyToken = require("./server/VerifyToken");
 const jwt = require("jsonwebtoken");
@@ -18,7 +19,11 @@ app.use(express.json());
 app.use(cors())
 // Initialize Passport
 require('./server/passport');
-
+app.use(session({
+  secret: "abdurrauf", // Replace with a secret key of your choice
+  resave: false,
+  saveUninitialized: false,
+}));
 
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 // app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
