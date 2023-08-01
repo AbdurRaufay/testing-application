@@ -27,6 +27,7 @@ passport.use(
         // callbackURL: 'http://localhost:3000/auth/google/callback', 
       },
       async (accessToken, refreshToken, profile, done) => {
+        console.log(profile,"p")
         try {
           let user = await User.findOne({ email: profile.emails[0].value });
           if (!user) {
@@ -38,6 +39,7 @@ passport.use(
               role: 'user', // Set the user role as per your requirements
             });
           }
+          console.log(user,"user")
           done(null, user);
         } catch (error) {
           done(error, null);
