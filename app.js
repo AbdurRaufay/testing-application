@@ -57,7 +57,7 @@ const opts = {
         resolvers,     
         cors: {
           // origin :"http://localhost:3000",
-            origin: 'https://dark-zipper-deer.cyclic.cloud',
+            origin: 'https://prismatic-sunshine-ec4f13.netlify.app',
             credentials: true,
             methods: ['GET', 'POST'],
           },
