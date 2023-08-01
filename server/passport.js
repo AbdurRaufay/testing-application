@@ -23,7 +23,8 @@ passport.use(
       {
         clientID: process.env.clientID,
         clientSecret: process.env.clientSecret,
-        callbackURL: 'https://prismatic-sunshine-ec4f13.netlify.app/auth/google/callback', 
+        // callbackURL: 'https://prismatic-sunshine-ec4f13.netlify.app/auth/google/callback', 
+        callbackURL: 'https://localhost:3000/auth/google/callback', 
       },
       async (accessToken, refreshToken, profile, done) => {
         try {

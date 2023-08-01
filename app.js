@@ -56,7 +56,8 @@ const opts = {
         typeDefs,
         resolvers,     
         cors: {
-            origin: 'https://prismatic-sunshine-ec4f13.netlify.app',
+          origin :"https://localhost:3000",
+            // origin: 'https://prismatic-sunshine-ec4f13.netlify.app',
             credentials: true,
             methods: ['GET', 'POST'],
           },
