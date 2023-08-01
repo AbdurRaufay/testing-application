@@ -83,8 +83,8 @@ const opts = {
       server.applyMiddleware({ app, path: "/graphql" });
   
       app.listen(PORT, () => {
-
-           console.log(`http://localhost:${PORT}/graphql`)
+      console.log(`${"https://dark-zipper-deer.cyclic.cloud/graphql"}`)
+          //  console.log(`http://localhost:${PORT}/graphql`)
       });
     } catch (error) {
       console.log("Error connecting to MongoDB:", error);

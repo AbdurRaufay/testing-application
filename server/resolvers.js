@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Todos = require("./todoModel.js");
 const User = require("./userModel.js");
-const CartItem=require("./cartItemModel.js")
+const CartItem = require("./cartItemModel.js")
 const resolvers = {
   Query: {
     users: async () => {
@@ -26,12 +26,12 @@ const resolvers = {
         throw err;
       }
     },
-    todos:async ()=>{
-      try{
-        const allTodos= await Todos.find()
+    todos: async () => {
+      try {
+        const allTodos = await Todos.find()
         return allTodos
-      }catch(err){
-        console.log(err,"err")
+      } catch (err) {
+        console.log(err, "err")
         throw err
       }
     },
@@ -57,22 +57,23 @@ const resolvers = {
       } catch (err) {
         console.log(err);
       }
-  },
-  cartItemById: async (_, { cartItemId }) => {
-    try {
-      const cartItem = await CartItem.findById(cartItemId);
-      if (!cartItem) {
-        throw new Error("Cart item not found");
+    },
+    cartItemById: async (_, { cartItemId }) => {
+      try {
+        const cartItem = await CartItem.findById(cartItemId);
+        if (!cartItem) {
+          throw new Error("Cart item not found");
+        }
+        return cartItem;
+      } catch (err) {
+        console.error(err);
+        throw err;
       }
-      return cartItem;
-    } catch (err) {
-      console.error(err);
-      throw err;
-    }
-  },
+    },
   },
   Mutation: {
     signUpUser: async (_, { firstName, lastName, email, password, role }) => {
+      console.log(firstName, lastName, email, password, role)
       try {
         const existingUser = await User.findOne({ email: email });
         if (existingUser) {
@@ -80,27 +81,26 @@ const resolvers = {
             message: "User already exists with that email"
           };
         }
-    
         const hashPassword = await bcrypt.hash(password, 10);
-        const userNew = await User.create({
+       await User.create({
           firstName,
           lastName,
           email,
           password: hashPassword,
           role: role
         });
-    
+        console.log(userNew, "ok")
         return {
-          userNew:userNew,
-          message: "Register Successfully"
-        };
+          firstName, lastName, email, password, role, message: "ok"
+        }
+
       } catch (err) {
         return {
           message: err.message
         };
       }
     },
-    
+
     // signUpUser: async ({ firstName, lastName, email, password, role }) => {
     //   try {
     //     const existingUser = await User.findOne({ email: email });
@@ -121,7 +121,7 @@ const resolvers = {
     //     throw err;
     //   }
     // },
-   
+
     loginUser: async (_, { email, password, googleAuthCode }) => {
       try {
         if (!email || !password) {
@@ -197,11 +197,11 @@ const resolvers = {
         };
       }
     },
-    createTodo: async (_, { addElement },{userId}) => {
+    createTodo: async (_, { addElement }, { userId }) => {
       try {
         if (!userId) {
           throw new Error('Create Todo you must be logged in.');
-        }  
+        }
         const user = await User.findById(userId);
         if (!user) {
           throw new Error('User not found');
@@ -222,16 +222,16 @@ const resolvers = {
         if (!userId) {
           throw new Error('You must be logged in to add items to the cart.');
         }
-    
+
         // Fetch the Todo (product) based on the given productId
         const todo = await Todos.findById(productId);
-    
+
         if (!todo) {
           throw new Error('Product not found.');
         }
-    
+
         const existingCartItem = await CartItem.findOne({ productId, userId });
-    
+
         if (existingCartItem) {
           // Item already exists in the cart, update the quantity and calculate the new price
           const newQuantity = quantity;
@@ -250,7 +250,7 @@ const resolvers = {
             quantity,
             userId,
           });
-    
+
           await cartItem.save();
           return cartItem;
         }
@@ -259,7 +259,7 @@ const resolvers = {
         throw new Error('An error occurred while adding the item to the cart.');
       }
     },
-    
+
   },
 };
 
