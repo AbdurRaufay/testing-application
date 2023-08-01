@@ -62,7 +62,8 @@ type CartItem {
       password:String
       role:String
       ): User!
-      loginUser(email: String, password: String ,googleAuthCode:String): LoginResponse! 
+      loginUser(email: String, password: String ): LoginResponse! 
+      loginUserWithGoogle(googleAuthCode: String!): LoginResponse!
     createTodo(addElement: TodoCreate): Todo 
     addToCart(productId: ID!, quantity: Int!): CartItem
   }

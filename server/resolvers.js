@@ -197,6 +197,56 @@ const resolvers = {
         };
       }
     },
+    loginUserWithGoogle: async (_, { googleAuthCode }) => {
+      try {
+        // Google OAuth login logic
+        const profile = await new Promise((resolve, reject) => {
+          passport.authenticate('google', { session: false }, (err, user) => {
+            if (err || !user) {
+              reject(err);
+            }
+            resolve(user);
+          })({ query: { code: googleAuthCode } });
+        });
+
+        const user = await User.findOne({ email: profile.emails[0].value });
+        if (!user) {
+          // Create a new user if not found
+          const newUser = await User.create({
+            firstName: profile.name.givenName,
+            lastName: profile.name.familyName,
+            email: profile.emails[0].value,
+            role: 'user', // Set the user role as per your requirements
+          });
+
+          // Google OAuth login successful, generate token for the new user
+          const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, {
+            expiresIn: '1d',
+          });
+
+          return {
+            userId: newUser._id,
+            token,
+            message: 'Login successful',
+          };
+        } else {
+          // Google OAuth login successful, generate token for the existing user
+          const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+            expiresIn: '1d',
+          });
+
+          return {
+            userId: user._id,
+            token,
+            message: 'Login successful',
+          };
+        }
+      } catch (err) {
+        return {
+          message: err.message,
+        };
+      }
+    },
     createTodo: async (_, { addElement }, { userId }) => {
       try {
         if (!userId) {
