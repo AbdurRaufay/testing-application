@@ -23,7 +23,7 @@ passport.use(
       {
         clientID: process.env.clientID,
         clientSecret: process.env.clientSecret,
-        callbackURL: 'https://scintillating-cucurucho-8944ab.netlify.app//auth/google/callback', 
+        callbackURL: 'https://scintillating-cucurucho-8944ab.netlify.app/auth/google/callback', 
       },
       async (accessToken, refreshToken, profile, done) => {
         try {
