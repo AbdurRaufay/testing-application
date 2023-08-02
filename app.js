@@ -46,7 +46,7 @@ app.get('/auth/google/callback', (req, res, next) => {
       }
 
       // Google OAuth login successful, generate token for the user
-      const token = jwt.sign({ userId: user._id }, 'your_secret_key_here', {
+      const token = jwt.sign({ userId: user._id }, 'abdurrauf', {
         expiresIn: '1d',
       });
 
