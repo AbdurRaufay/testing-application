@@ -152,7 +152,7 @@ const resolvers = {
         };
       }
     },
-    loginUserWithGoogle: async (_, { googleAuthCode }) => {
+    loginUserWithGoogle: async (_, { googleAuthCode }, context) => {
       try {
         // Google OAuth login logic
         const profile = await new Promise((resolve, reject) => {
@@ -161,7 +161,7 @@ const resolvers = {
               reject(err);
             }
             resolve(user);
-          })({ query: { code: googleAuthCode } });
+          })(context.req, context.res); // Pass the request and response objects from the context
         });
 
         const user = await User.findOne({ email: profile.emails[0].value });
