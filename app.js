@@ -25,10 +25,34 @@ app.use(session({
   saveUninitialized: false,
 }));
 
-app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
-  console.log(res,"response")
-  res.redirect('https://dark-zipper-deer.cyclic.cloud/auth/google/callback');
+// app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+// app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
+//   console.log(res,"response")
+//   res.redirect('https://dark-zipper-deer.cyclic.cloud/auth/google/callback');
+// });
+app.get('/auth/google/callback', (req, res, next) => {
+  passport.authenticate('google', { failureRedirect: '/' }, (err, user) => {
+    if (err) {
+      return res.status(500).json({ message: 'Authentication error', error: err });
+    }
+
+    if (!user) {
+      return res.status(401).json({ message: 'User not found' });
+    }
+
+    req.logIn(user, (err) => {
+      if (err) {
+        return res.status(500).json({ message: 'Login error', error: err });
+      }
+
+      // Google OAuth login successful, generate token for the user
+      const token = jwt.sign({ userId: user._id }, 'your_secret_key_here', {
+        expiresIn: '1d',
+      });
+
+      return res.redirect(`https://dark-zipper-deer.cyclic.cloud/auth/google/callback?token=${token}`);
+    });
+  })(req, res, next);
 });
 
 const opts = {
